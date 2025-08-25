@@ -203,4 +203,9 @@ SWAGGER_SETTINGS = {
         'delete',
         'patch'
     ],
+    'SECURITY_REQUIREMENTS': [
+        {'Bearer': []}
+    ],
 }
+
+SWAGGER_USE_COMPAT_RENDERERS = False

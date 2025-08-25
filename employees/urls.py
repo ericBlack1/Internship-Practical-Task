@@ -12,10 +12,14 @@ router.register(r'employees', views.EmployeeViewSet)
 # The API URLs are now determined automatically by the router
 urlpatterns = [
     path('', include(router.urls)),
-    # Authentication endpoints
-    path('auth/login/', auth.login_view, name='auth_login'),
-    path('auth/refresh/', auth.refresh_token_view, name='auth_refresh'),
-    path('auth/register/', auth.register_view, name='auth_register'),
+    # Authentication endpoints (APIView with schemas)
+    path('auth/login/', auth.LoginAPIView.as_view(), name='auth_login'),
+    path('auth/refresh/', auth.RefreshAPIView.as_view(), name='auth_refresh'),
+    path('auth/register/', auth.RegisterAPIView.as_view(), name='auth_register'),
+    # Backward-compatible function endpoints (optional aliases)
+    # path('auth/login-fn/', auth.login_view),
+    # path('auth/refresh-fn/', auth.refresh_token_view),
+    # path('auth/register-fn/', auth.register_view),
     # Charts and analytics endpoints
     path('charts/dashboard/', charts_views.charts_dashboard, name='charts_dashboard'),
     path('charts/department-stats/', charts_views.api_department_stats, name='api_department_stats'),

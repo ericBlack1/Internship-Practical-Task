@@ -20,6 +20,7 @@ from rest_framework_simplejwt.views import (
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
+from django.http import JsonResponse
 
 # Import charts views directly
 from employees.charts_views import charts_dashboard
@@ -38,6 +39,9 @@ schema_view = get_schema_view(
     permission_classes=[permissions.AllowAny],
 )
 
+def health_view(request):
+    return JsonResponse({'status': 'ok'})
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('employees.urls')),
@@ -55,4 +59,7 @@ urlpatterns = [
     
     # Charts Dashboard - Direct view import (no DRF authentication)
     path('charts/', charts_dashboard, name='charts_dashboard'),
+    
+    # Health
+    path('health', health_view, name='health'),
 ]
