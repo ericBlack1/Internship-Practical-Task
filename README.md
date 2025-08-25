@@ -468,3 +468,60 @@ Your Employee Management System is now complete with:
 - ✅ Beautiful Chart.js visualizations
 - ✅ Comprehensive testing suite
 - ✅ Production-ready security features
+
+## Docker Setup
+
+### Build & Run
+```bash
+# Build images and start services
+docker compose up --build
+# App: http://127.0.0.1:8000/
+# Swagger: http://127.0.0.1:8000/swagger/
+# Health: http://127.0.0.1:8000/health/
+```
+
+### Environment
+The compose file starts Postgres and the web app. Environment variables are passed via docker-compose.yml.
+
+### Common Commands
+```bash
+docker compose logs -f web
+docker compose exec web python manage.py migrate
+docker compose down -v
+```
+
+## Running Tests
+
+### Local
+```bash
+pip install -r requirements.txt
+pytest -q
+```
+
+### In CI
+GitHub Actions workflow at `.github/workflows/tests.yml` runs on push/PR.
+
+## Swagger / API Docs
+- Swagger UI: `/swagger/` (http://127.0.0.1:8000/swagger/)
+- Redoc: `/redoc/`
+- OpenAPI: `/swagger.json`
+
+Use the green Authorize button and paste: `Bearer <ACCESS_TOKEN>`.
+
+## TEST-GUIDELINES (Test Strategy)
+
+### Seeded Tests (tests/seeded/)
+- Deterministic unit & CRUD tests using Django TestCase with Faker seeded data
+- Focus: model constraints, duplicate handling, simple CRUD
+
+### Integration Tests (tests/integration/)
+- DRF APIClient with JWT authentication
+- Covers: CRUD endpoints, filtering, pagination, sorting
+
+### Edge Cases (tests/edge_cases/)
+- Invalid/missing JWT → 401
+- Non-existent IDs → 404
+- Double delete / invalid transitions → 400/404
+- Health endpoint `/health` returns `{"status":"ok"}`
+
+Run all with `pytest -q`.

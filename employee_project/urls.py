@@ -62,4 +62,5 @@ urlpatterns = [
     
     # Health
     path('health', health_view, name='health'),
+    path('health/', health_view, name='health-slash'),
 ]
